@@ -14,7 +14,7 @@ services:
       - --overprovisioned
       - --set redpanda.empty_seed_starts_cluster=false
       - --seeds "redpanda-1:33145"
-      - --advertise-rpc-addr redpanda-1:33145 
+      - --advertise-rpc-addr redpanda-1:33145
       - --advertise-kafka-addr redpanda-1:9092
     networks:
       - redpandanet
