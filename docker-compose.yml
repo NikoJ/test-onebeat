@@ -68,7 +68,7 @@ services:
       - HOST_BROKER=redpanda-1
       - PORT_BROKER=9092
     depends_on:
-      - producer_app
+      - consumer_producer_app
 
 networks:
   redpandanet:

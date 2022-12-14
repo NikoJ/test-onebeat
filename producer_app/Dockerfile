@@ -8,4 +8,4 @@ RUN python3 -m pip install --upgrade pip && pip install -r requirements.txt
 
 COPY producer.py producer.py
 
-ENTRYPOINT sleep 7 && python3 producer.py
+ENTRYPOINT sleep 10 && python3 producer.py

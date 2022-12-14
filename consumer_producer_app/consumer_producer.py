@@ -1,5 +1,5 @@
 import os
-from json import dumps
+import json
 from kafka import KafkaConsumer, KafkaProducer
 import logging
 
@@ -22,22 +22,21 @@ def main():
     auto_offset_reset="earliest",
     enable_auto_commit=False,
     consumer_timeout_ms=1000,
-    group_id="my_consumer_in"
+    group_id="my_consumer_in",
+    value_deserializer=lambda x: json.loads(x.decode(ENCODING))
   )
 
   producer = KafkaProducer(
     bootstrap_servers=KAFKA_BROKERS,
-    value_serializer=lambda v:dumps(v).encode(ENCODING)
+    value_serializer=lambda v:json.dumps(v).encode(ENCODING)
     )
 
   consumer.subscribe(KAFKA_TOPIC_IN) 
 
   for message in consumer:
-    value = str(message.value, ENCODING)
-    key = str(message.key, ENCODING)
-
+    value = message.value["date"]
     sum_for_day = sum_of_digits(value)
-    message_info = {key: value, "sum": sum_for_day}
+    message_info = {"date": value, "sum": sum_for_day}
 
     future = producer.send(
       KAFKA_TOPIC_OUT,

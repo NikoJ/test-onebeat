@@ -15,6 +15,7 @@ HOST = os.environ.get("HOST_BROKER")
 PORT = os.environ.get("PORT_BROKER")
 KAFKA_BROKERS = f"{HOST}:{PORT}" 
 KAFKA_TOPIC_IN = "demo_in"
+ENCODING = 'UTF-8'
 
 def on_success(metadata):
   logging.info(f"Sent to topic '{metadata.topic}' at offset {metadata.offset}")
@@ -23,14 +24,15 @@ def on_error(e):
   logging.error(f"Error sending message: {e}")
 
 def main():
+  message_info = {"date": str(date.today())}
   producer = KafkaProducer(
-    bootstrap_servers=KAFKA_BROKERS
+    bootstrap_servers=KAFKA_BROKERS,
+    value_serializer=lambda v:dumps(v).encode(ENCODING)
     )
-  # Produce asynchronously with callbacks
+
   future = producer.send(
     KAFKA_TOPIC_IN,
-    key=str.encode("date"),
-    value=str.encode(str(date.today()))
+    value=message_info
     )
   future.add_callback(on_success)
   future.add_errback(on_error)

@@ -8,4 +8,4 @@ RUN python3 -m pip install --upgrade pip && pip install -r requirements.txt
 
 COPY consumer.py consumer.py
 
-ENTRYPOINT sleep 14 && python3 consumer.py
+ENTRYPOINT python3 consumer.py
