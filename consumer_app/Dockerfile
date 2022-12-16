@@ -1,11 +1,7 @@
-FROM python:3.8
+FROM custom_python:latest
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-
-RUN python3 -m pip install --upgrade pip && pip install -r requirements.txt
-
 COPY consumer.py consumer.py
 
-ENTRYPOINT python3 consumer.py
+ENTRYPOINT sleep 10 && python3 consumer.py

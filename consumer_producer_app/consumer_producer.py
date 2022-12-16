@@ -18,6 +18,13 @@ ENCODING = "UTF-8"
 
 
 def main():
+    """
+    Create a kafka consumer and producer
+
+    Consumer + Producer → Get the message, calculate the date integers sum, 
+    for example: '2022-01-03' results will be '10'. 
+    At the end produce the results message {'date': today, 'sum': result}
+    """
     consumer = KafkaConsumer(
         bootstrap_servers=[KAFKA_BROKERS],
         auto_offset_reset="earliest",

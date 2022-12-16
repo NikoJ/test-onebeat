@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(
     format="%(levelname)s: %(asctime)s - %(message)s",
     datefmt="%d-%b-%y %H:%M:%S",
-    level=logging.INFO
+    level=logging.INFO,
 )
 
 HOST = os.environ.get("HOST_BROKER")
@@ -19,22 +19,19 @@ KAFKA_TOPIC_OUT = "demo_out"
 
 
 def main():
+    """
+    Create a kafka topic
+    """
     tries = 3
     for i in range(tries):
         try:
-            admin = KafkaAdminClient(
-                bootstrap_servers=KAFKA_BROKERS
-            )
+            admin = KafkaAdminClient(bootstrap_servers=KAFKA_BROKERS)
             try:
                 topic_in = NewTopic(
-                    name=KAFKA_TOPIC_IN,
-                    num_partitions=1,
-                    replication_factor=1
+                    name=KAFKA_TOPIC_IN, num_partitions=1, replication_factor=1
                 )
                 topic_out = NewTopic(
-                    name=KAFKA_TOPIC_OUT,
-                    num_partitions=1,
-                    replication_factor=1
+                    name=KAFKA_TOPIC_OUT, num_partitions=1, replication_factor=1
                 )
                 admin.create_topics(new_topics=[topic_in, topic_out])
                 logging.info("Created topic")
@@ -47,8 +44,7 @@ def main():
         except (NoBrokersAvailable, NodeNotReadyError) as e:
             if tries > 0:
                 tries -= 1
-                logging.warning(
-                    f"Kafka not ready yet. Tries remaining: {tries}")
+                logging.warning(f"Kafka not ready yet. Tries remaining: {tries}")
                 time.sleep(3)
             else:
                 logging.error(e)

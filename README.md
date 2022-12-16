@@ -1,4 +1,4 @@
-To start the project, you need to run the command from the project root: ```docker-compose up -d```
+To start the project, you need to run the command from the project root: ```bash run.sh```
 
 Please wait 30-50 seconds
 

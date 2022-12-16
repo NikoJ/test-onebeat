@@ -1,5 +1,4 @@
 import os
-import time
 from json import dumps
 from datetime import date
 from kafka import KafkaProducer
@@ -27,6 +26,11 @@ def on_error(e):
 
 
 def main():
+    """
+    Create a kafka producer
+
+    Producer → Produce the following message {'date': today}
+    """
     message_info = {"date": str(date.today())}
     producer = KafkaProducer(
         bootstrap_servers=KAFKA_BROKERS,

@@ -17,6 +17,11 @@ ENCODING = "UTF-8"
 
 
 def main():
+    """
+    Create a kafka consumer
+
+    Consumer → Print the result message
+    """
     consumer = KafkaConsumer(
         bootstrap_servers=[KAFKA_BROKERS],
         auto_offset_reset="earliest",
